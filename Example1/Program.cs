@@ -14,9 +14,12 @@ namespace NorenRestSample
     public static class Program
     {
         #region dev  credentials
-
-        public const string endPoint = "http://api.noren.com/NorenWClient/";
-        public const string wsendpoint = "wss://api.noren.com/NorenWSWeb/";
+        //for UAT
+        public const string endPoint = "https://kambala-uat.tradesmartonline.in/NorenWClientTP/";
+        public const string wsendpoint = "wss://kambala-uat.tradesmartonline.in/NorenWSTP/";
+        //for live
+        //public const string endPoint = "https://kambala-uat.tradesmartonline.in/NorenWClientTP/";
+        //public const string wsendpoint = "wss://kambala-uat.tradesmartonline.in/NorenWSTP/";
         public const string uid = "";
         public const string actid = "";
         public const string pwd = "";
