@@ -1,4 +1,4 @@
-# NorenApi-dotnet
+# TradesmartApi-dotnet
 
 [INTRODUCTION](#md_introduction)
 
