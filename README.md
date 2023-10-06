@@ -4,17 +4,7 @@
 
 [Login and Session](#md_session)
 - [Login](#md_login)
-- [UserDetails](#md_userdetails)
-- [ForgotPassword](#md_forgot)
-- [ChangePassword](#md_changepwd)
 - [Logout](#md_logout)
-- [SetSession](#md_setsession)
-
-[WatchLists](#md_watchlist)
-- [GetWatchListNames](#md_getwatchlistnames)
-- [GetWatchList](#md_getwatchlist)
-- [AddScriptoWatchList](#md_addscripwatchlist)
-- [DeleteScriptoWatchList](#md_delscripwatchlist)
 
 [Market](#md_market)
 - [SearchScrips](#md_searchscrips)
@@ -22,28 +12,15 @@
 - [GetQuote](#_TOC_250012)
 - [GetTimePriceData(Chartdata)](#md_tpseries)
 - [GetOptionChain](#md_optionchain)
-- [GetIndexList](#md_indexlist)
-- [ExchMsg](#md_exchmsg)
-- [TopListNames](#md_toplistnames)
-- [TopList](#md_toplist)
-
-[Calculators]
-- [span_calculator](#md-span_calculator)
-- [get_option_greek](#md-get_option_greek)
-- [get_brokerage](#md-get_brokerage)
 
 [Orders and Trades](#md_ordersntrades)
 - [PlaceOrder](#md_placeorder)
 - [ModifyOrder](#md_modifyorder)
 - [CancelOrder](#md_cancelorder)
 - [ExitSNOOrder](#md_exitorder)
-- [ProductConversion](#md_prdconvert)
-- [OrderMargin](#md_ordermargin)
 - [OrderBook](#md_orderbook)
 - [TradeBook](#md_tradebook)
 - [SingleOrderHistory](#md_orderhistory)
-- [MultiLegOrderBook](#md_mlorderbook)
-- [BasketOrderMargin](#_TOC_250024)
 - [PositionsBook](#md_positions)
 - [Holdings](#md_holdings)
 - [Limits](#md_limits)
@@ -153,33 +130,6 @@ Response is of type LoginResponse
 |emsg||This will be present only if Login fails.|(Redirect to force change password if message is “Invalid Input : Password Expired” or “Invalid Input : Change Password”)|
 
 
-## <a name="md_userdetails"></a> UserDetails
-
-###### public bool SendGetUserDetails(OnResponse response)
-
-Example:
-```
-//get user details
-nApi.SendGetUserDetails(Handlers.OnUserDetailsResponse);
-```
-Request Details :
-
-|Json Fields|Possible value|Description|
-| --- | --- | ---|
-
-Response is of type UserDetailsResponse
-
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-| exarr  |   | list of exchanges enabled | 
-| orarr  |   | ordertypes enabled for the user| 
-| prarr  |   | list of product object | 
-| brkname |  | Region Category | 
-| brnchid  |   |  Branch Category | 
-| actid  |   | Account Id | 
-| email  |   | Email Id | 
-
-
 ## <a name="md_logout"></a> Logout
 
 ###### public bool SendLogout(OnResponse response)
@@ -202,123 +152,6 @@ Response is of type LogoutResponse :
 |request_time||It will be present only on successful logout.|
 |emsg||This will be present only if Logout fails.|
 
-## <a name="md_forgot"></a> ForgotPassword
-
-###### public bool SendForgotPassword(OnResponse response,string endpoint,string user,string pan,string dob)
-
-Example: 
-```
-ret = nApi.SendForgotPassword(OnForgotPwdResponse, endpoint, user, pan, dob);
-```
-Request Details :
-
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-| uid* |   | User Id | 
-| pan* |   | pan of the user |
-| dob* |   | Date of birth |
-
-Response is of type ForgotPasswordResponse:
-
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-| stat  |  Ok or Not_Ok | Success Or failure status | 
-| emsg  |   | This will be present only if request fails. |
-
-## <a name="md_changepwd"></a> ChangePassword
-
-###### public bool Changepwd(OnResponse response,Changepwd changepwd)
-
-Example: 
-```
-ret = nApi.SendChangepwd(OnChangePwdResponse, changepwd);
-```
-Request Details : Changepwd
-
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-| uid* |   | User Id | 
-| oldpwd* |   | old password of the user |
-| pwd* |   | new password of the user |
-
-Response is of type ChangepwdResponse:
-
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-| stat  |  Ok or Not_Ok | Success Or failure status | 
-| emsg  |   | This will be present only if request fails. |
-
-## <a name="md_setsession"></a> SetSession
-This method initializes the api with an existing session instead of creating a new session with SendLogin.
-
-###### public bool SetSession(string endpoint, string uid, string pwd, string usertoken)
-
-Request Details : 
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-| endpoint || server endpoint|
-|uid || user     |
-|pwd || password |
-|usertoken|| session id from loginresponse. |
-
-Response is of type bool :
-
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-|Value|True/False| |
-
-
-# <a name="md_watchlist"></a> WatchLists
-
-## <a name="md_getwatchlistnames"></a> GetWatchListNames
-
-###### public bool SendGetMWList(OnResponseresponse)
-
-Request Details : 
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-
-Response is of type MWListResponse :
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-
-
-## <a name="md_getwatchlist"></a> GetWatchList
-
-###### public bool SendGetMarketWatch(OnResponse response,string wlname)
-
-Request Details : 
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-
-Response is of type MarketWatchResponse :
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-
-
-##  <a name="md_addscripwatchlist"></a> AddScriptoWatchList
-
-###### public bool SendAddMultiScripsToMW(OnResponse response,string watchlist,string scrips)
-
-Request Details : 
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-
-Response is of type StandardResponse :
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-
-##  <a name="md_delscripwatchlist"></a> DeleteScriptoWatchList
-
-###### public bool SendDeleteMultiMWScrips( OnResponse response,string watchlist,string  scrips)
-
-Request Details : 
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
-
-Response is of type StandardResponse :
-| Json Fields| Possible value| Description| 
-| --- | --- | --- |
 
 ## <a name="md_searchscrips"></a>  SearchScrips
 
@@ -502,128 +335,6 @@ Response data will have below fields.
 |expmrg||Exposure Margin|
 |token||Contract Token  |
 |prcftr_d||((GN / GD) * (PN/PD))|
-
-
-#### <a name="md-span_calculator"></a> span_calculator(actid,positionlist)
-This calculates the margin requirement for a list of input positions.
-
-Example: 
-
-```
-ret = api.span_calculator(actid,positionlist)
-```
-Request Details :
-
-|Json Fields|Possible value|Description|
-| --- | --- | ---|
-|actid*||Any Account id, preferably actual account id if sending from post login screen.|
-|pos*||Array of json objects. (object fields given in below table)|
-
-Position structure as follows:
-
-|Json Fields|Possible value|Description|
-| --- | --- | ---|
-| prd | C / M / H  | Product | 
-|exch|NFO, CDS, MCX ...|Exchange|
-|instname|FUTSTK, FUTIDX, OPTSTK, FUTCUR...|Instrument name|
-|symname|USDINR, ACC, ABB,NIFTY.. |Symbol name|
-|exd|29-DEC-2022|DD-MMM-YYYY format|
-|optt|CE, PE|Option Type|
-|strprc|11900.00, 71.0025|Strike price|
-|buyqty||Buy Open Quantity|
-|sellqty||Sell Open Quantity|
-|netqty||Net traded quantity|
-
-
-Response Details :
-
-
-|Json Fields|Possible value|Description|
-| --- | --- | ---|
-|stat|Ok or Not_Ok|Market watch success or failure indication.|
-|span||Span value |
-|expo||IExposure margin|
-|span_trade||Span value ignoring input fields buyqty, sellqty|
-|expo_trade||Exposure margin ignoring input fields buyqty, sellqty|
-
-Sample Success Response :
-{
-    "request_time": "11:01:59 25-11-2022",
-    "stat": "Ok",
-    "span": "19416.00",
-    "expo": "4338.34",
-    "span_trade": "19416.00",
-    "expo_trade": "4338.34"
-}
-
-
-#### <a name="md-get_option_greek"></a>get_option_greek(expiredate,StrikePrice,SpotPrice,InterestRate,Volatility,OptionType)
-Options greeeks computed the delta, thetha, vega , rho values.
-
-Example: 
-
-```
-ret = api.option_greek(expiredate ='24-NOV-2022',StrikePrice='150',SpotPrice  = '200',InitRate  = '100',Volatility = '10',OptionType='5')
-```
-Request Details :
-
-|Json Fields|Possible value|Description|
-| --- | --- | ---|
-|exd*||Expiry Date|
-|strprc*||Strike Price |
-|sptprc*||Spot Price|
-|int_rate*||Interest Rate|
-|volatility*||Volatility|
-|optt||Option Type|
-
-Response Details :
-
-
-|Json Fields|Possible value|Description|
-| --- | --- | ---|
-|stat|Ok or Not_Ok|success or failure indication.|
-|request_time||This will be present only in a successful response.|
-|cal_price||Cal Price|
-|put_price||Put Price|
-|cal_delta||Cal Delta|
-|put_delta||Put Delta|
-|cal_gamma||Cal Gamma|
-|put_gamma||Put Gamma|
-|cal_theta||Cal Theta|
-|put_theta||Put Theta|
-|cal_delta||Cal Delta|
-|cal_rho||Cal Rho|
-|put_rho||Put Rho|
-|cal_vego||Cal Vego|
-|put_vego||Put Vego|
-
-Sample Success Response :
- {
-"request_time":"17:22:58 28-07-2021",
-"stat":"OK",
-"cal_price":"1441",
-"put_price":"0.417071",
-"cal_delta":"0.997304",
-"put_delta":"-0.002696",
-"cal_gamma":"0.000001",
-"put_gamma":"0.000001",
-"cal_theta":"-31.535015",
-"put_theta":"-31.401346",
-"cal_rho":"0.000119",
-"put_rho":"-0.016590",
-"cal_vego":"0.006307",
-put_vego":"0.006307"
-  }
-
-Sample Failure Response :
-{
- "stat":"Not_Ok",
- "emsg":"Invalid Input :  jData is Missing."
-}
-
-## <a name="get_brokerage"></a> GetBrokerage
-
-Get the brokerage of a single order.
 
 # Order and Trades
 
@@ -833,20 +544,6 @@ Response is of type ExitSNOOrderResponse :
 |request_time||Response received time.|
 |emsg||This will be present only if Order cancelation fails|
 
-## <a name="md_ordermargin"></a> OrderMargin
-
-###### public bool SendGetOrderMargin( OnResponse response,OrderMargin ordermargin)
-
-Request Details :
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-
-Response is of type OrderMarginResponse:
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-
 ## <a name="md_orderbook"></a> OrderBook
 
 ###### public bool SendGetOrderBook( OnResponse response,string product)
@@ -906,21 +603,6 @@ Response in case of failure:
 |request_time||Response received time.|
 |emsg||Error message|
 
-## <a name="md_mlorderbook"></a> MultiLegOrderBook
-
-###### public bool SendGetMultiLegOrderBook( OnResponse response,string product)
-
-Request Details :
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-|  No Parameters  |
-
-Response is of type MultiLegOrderBookResponse: 
-
-MultiLegOrderBookResponse has a list of MultiLegOrderBookItem
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
 
 ## <a name="md_orderhistory"></a> SingleOrderHistory
 
@@ -1033,24 +715,6 @@ Response data will be in json format with below fields in case of failure:
 |emsg||Error message|
 
 
-## <a name="md_exchmsg"></a> ExchMsg
-
-###### public bool SendGetExchMsg( OnResponse response,ExchMsg exchmsg)
-
-Request Details :
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-|exch||Exchange Segment|
-
-Response is of type ExchMsgResponse: 
-
-ExchMsgResponse has a list of ExchMsg
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-
-
 ## <a name="md_positions"></a> PositionsBook
 
 ###### public bool SendGetPositionBook( OnResponse response,string account)
@@ -1115,32 +779,6 @@ Response data in case of failure:
 |stat|Not_Ok|Position book request failure indication.|
 |request_time||Response received time.|
 |emsg||Error message|
-
-## <a name="md_prdconvert"></a> ProductConversion
-
-###### public bool SendProductConversion( OnResponse response,ProductConversion prdConv)
-
-Request Details :
-
-|Json Fields|Possible value|Description|
-| --- | --- | ---|
-|exch*||Exchange|
-|tsym*||Unique id of contract on which order was placed. Can’t be modified, must be the same as that of original order. (use url encoding to avoid special char error for symbols like M&M)|
-|qty*||Quantity to be converted.|
-|uid*||User id of the logged in user.|
-|actid*||Account id|
-|prd*||Product to which the user wants to convert position. |
-|prevprd*||Original product of the position.|
-|trantype*||Transaction type|
-|postype*|Day / CF|Converting Day or Carry forward position|
-|ordersource|MOB |For Logging|
-
-Response Details :
-
-|Json Fields|Possible value|Description|
-| --- | --- | ---|
-|stat|Ok or Not_Ok|Position conversion success or failure indication.|
-|emsg||This will be present only if Position conversion fails.|
 
 # Holdings and Limits
 
@@ -1363,51 +1001,6 @@ Sample Failure Response :
 }
 
 # <a name="md_market"></a> MarketInfo
-
-## <a name="md_indexlist"></a> GetIndexList
-
-Request Details :
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-|exch||Exchange Segment|
-
-Response is of type IndexListResponse: 
-
-IndexListResponse has a list of Index
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-
-## <a name="md_toplistnames"></a> GetTopListNames
-
-Request Details :
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-|exch||Exchange Segment|
-
-Response is of type TopListNamesResponse: 
-
-TopListNamesResponse has a list of Index
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-
-## <a name="md_toplist"></a> GetTopList
-
-Request Details :
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
-|exch||Exchange Segment|
-
-Response is of type TopListResponse: 
-
-TopListResponse has a list of Index
-
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
 
 ##  <a name="md_tpseries"></a> GetTimePriceData /ChartData
 
