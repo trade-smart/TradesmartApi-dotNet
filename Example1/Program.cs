@@ -96,34 +96,14 @@ namespace NorenRestSample
                             var orderno = Console.ReadLine();
                             nApi.SendGetOrderHistory(Handlers.OnOrderHistoryResponse, orderno);
                             break;
-                        case "I":
-                            nApi.SendGetIndexList(Handlers.OnResponseNOP, "NSE");
-                            break;
 
                         case "L":
                             nApi.SendGetLimits(Handlers.OnResponseNOP, actid);
-                            break;
-                        case "M":
-                            ActionGetOrderMargin();
                             break;
                         case "O":
                             nApi.SendGetOrderBook(Handlers.OnOrderBookResponse, "");
                             break;
 
-                        case "P":
-                            ProductConversion productConversion = new ProductConversion();
-                            productConversion.actid = actid;
-                            productConversion.exch = "NSE";
-                            productConversion.ordersource = "API";
-                            productConversion.prd = "C";
-                            productConversion.prevprd = "I";
-                            productConversion.qty = "1";
-                            productConversion.trantype = "B";
-                            productConversion.tsym = "YESBANK-EQ";
-                            productConversion.uid = uid;
-                            productConversion.postype = "Day";
-                            nApi.SendProductConversion(Handlers.OnResponseNOP, productConversion);
-                            break;
                         case "R":
                             ActionPlaceBOorder();
                             break;
@@ -143,10 +123,6 @@ namespace NorenRestSample
                             nApi.SendLogout(Handlers.OnAppLogout);
                             dontexit = false;
                             return;
-                        case "U":
-                            //get user details
-                            nApi.SendGetUserDetails(Handlers.OnUserDetailsResponse);
-                            break;
                         case "V":
                             DateTime today = DateTime.Now.Date;
                             double start = ConvertToUnixTimestamp(today);
@@ -170,12 +146,6 @@ namespace NorenRestSample
                             nApi.SendGetQuote(Handlers.OnResponseNOP, exch, token);
                             break;
 
-                        case "BM":
-                            ActionGetBasketMargin();
-                            break;
-                        case "FP":                            
-                            nApi.SendForgotPassword(Handlers.OnResponseNOP,endPoint, uid, pan, dob);
-                            break;
                         case "WU":
                             nApi.UnSubscribeToken("NSE", "22");
                             break;
@@ -191,7 +161,6 @@ namespace NorenRestSample
                             break;
                         case "ST":
                             NorenRestApi nApi_2 = new NorenRestApi();
-                            nApi_2.SetSession(endPoint, uid, pwd, nApi.UserToken);
                             nApi_2.SendGetHoldings(Handlers.OnHoldingsResponse, actid, "C");
                             nApi_2.SendGetQuote(Handlers.OnResponseNOP, "NSE", "22");
                             break;
@@ -289,57 +258,6 @@ namespace NorenRestSample
             nApi.SendPlaceOrder(Handlers.OnResponseNOP, order);
         }
 
-        public static void ActionGetOrderMargin()
-        {
-            //sample cover order
-            OrderMargin order = new OrderMargin();
-            order.uid = uid;
-            order.actid = actid;
-            order.exch = "NSE";
-            order.tsym = "M&M-EQ";
-            order.qty = "10";
-            order.dscqty = "0";
-            order.prc = "100.5";
-
-            order.prd = "I";
-            order.trantype = "B";
-            order.prctyp = "LMT";           
-            
-            nApi.SendGetOrderMargin(Handlers.OnResponseNOP, order);
-        }
-
-        public static void ActionGetBasketMargin()
-        {
-            //sample cover order
-            BasketMargin basket = new BasketMargin();
-            BasketListItem item = new BasketListItem();
-
-            //first order
-            basket.uid = uid;
-            basket.actid = actid;
-            basket.exch = "NSE";
-            basket.tsym = "ABB-EQ";
-            basket.qty = "10";
-            basket.prc = "100.5";
-
-            basket.prd = "I";
-            basket.trantype = "B";
-            basket.prctyp = "LMT";
-
-
-            //second order
-            item.exch = "NSE";
-            item.tsym = "ACC-EQ";
-            item.qty = "20";
-            item.prc = "100.5";
-
-            item.prd = "I";
-            item.trantype = "B";
-            item.prctyp = "LMT";
-            basket.basketlists = new List<BasketListItem>();
-            basket.basketlists.Add(item);
-            nApi.SendGetBasketMargin(Handlers.OnResponseNOP, basket);
-        }
 
         public static void ActionGetOptionChain()
         {
@@ -371,12 +289,8 @@ namespace NorenRestSample
             Console.WriteLine("G: get holdings");
             Console.WriteLine("L: get limits");
             Console.WriteLine("M: get singleorder margin");
-            Console.WriteLine("BM: get basket margin");
             Console.WriteLine("W: search for scrips (min 3 chars)");
-            Console.WriteLine("P: position convert");
-            Console.WriteLine("U: get user details");
             Console.WriteLine("V: get intraday 1 min price data");
-            Console.WriteLine("I: get list of index names");
             Console.WriteLine("D: get Option Chain");
         }
         #endregion

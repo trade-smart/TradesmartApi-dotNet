@@ -49,11 +49,6 @@ namespace NorenRestSample
             Program.ActionOptions();
             return;           
         }
-        public static void OnUserDetailsResponse(NorenResponseMsg Response, bool ok)
-        {
-            UserDetailsResponse userDetailsResponse = Response as UserDetailsResponse;
-            Console.WriteLine(userDetailsResponse.toJson());
-        }
         public static void OnResponseNOP(NorenResponseMsg Response, bool ok)
         {
             Console.WriteLine("app handler :" + Response.toJson());
